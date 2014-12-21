@@ -1,0 +1,45 @@
+ /*
+ ** Author : Mudit
+ */
+
+ html,body {
+  height: 100%;
+  margin: 0;
+  background-color: #E5E5E5;
+  font-family: 'RobotoDraft', sans-serif;
+}
+
+core-header-panel {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+core-toolbar {
+  height: 61.5px !important;
+  color: white;
+}
+
+@media (min-width: 481px) {
+  #tabs {
+    width: 200px;
+  }
+  .container {
+    width: 400px;
+  }
+}
+
+#navheader {
+  background-color: #56BA89;
+}
+
+#submit {
+  background: #526E9C;
+  color: white;
+  margin: 2em 3.29em 0 0 !important;
+}
+
+#map-canvas {
+  padding: 20em;
+  border: 1px solid #999;
+}
