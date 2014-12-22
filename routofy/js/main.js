@@ -70,11 +70,11 @@ function calcRoute() {
 	setCookie("destination",end);
 }
 
-function createGraph(start,end){
+function createGraph(start,end){		    	
+	var map_key = start+"-"+end;
 	//Checking for source and destination in Cache
-	if(!mapCache[start+"-"+end]){
-		console.log("Call API");
-
+	if(!mapCache[map_key]){
+		//console.log("Call API");
 		  var request = {
 		      origin:start,
 		      destination:end,
@@ -82,14 +82,13 @@ function createGraph(start,end){
 		  };
 		  directionsService.route(request, function(response, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
-		    	var map_key = start+"-"+end;
 		    	mapCache[map_key] = response;
 		        directionsDisplay.setDirections(response);
 		    }
 		  });
 	} else {
-		console.log("Create Map from hash");
-		directionsDisplay.setDirections(mapCache[start+"-"+end]);
+		//console.log("Create Map from hash");
+		directionsDisplay.setDirections(mapCache[map_key]);
 	}
 }
 
@@ -142,7 +141,37 @@ function enterList() {
 		var entry_object = "<div><b>Source</b>: <span id='source_start'>"+input_source +"</span>...<br><b>Destination</b>: <span id='destination_end'>"+input_destination+"</span>...</div>";
 		$('#searchList').prepend(entry_object);
 	}
+	//setCache();
 }
 
 
 
+//Function to calculate MFU (Most Frequently Used) source and destination and store in Cache (Default size of case - 5)
+function setCache(){
+	var array_count = {};
+	$('#searchList div').each(function(){
+		var count = 0;
+		var start = $(this).find('#source_start').html();
+		var end = $(this).find('#destination_end').html();
+		var src_dest = start+"-"+end;
+
+		if(!array_count[src_dest]) {
+			array_count[src_dest] = 1;
+		} else {
+			array_count[src_dest] = array_count[src_dest] + 1;	
+		}
+	});
+	array_count = getSortedKeys(array_count);
+	//console.log(mapCache);
+} 
+
+//Sorting cache to get top 5 most frequently occured searches
+function getSortedKeys(obj) {
+    var keys = []; 
+    for(var key in obj) {
+    	keys.push(key);
+    }
+    return keys.sort(function(a,b){
+    	return obj[b]-obj[a]
+   	});
+}
