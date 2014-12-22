@@ -36,9 +36,14 @@
             </paper-input-decorator>
           </core-item>
           <core-item>
-            <paper-button raised fill id="submit" onclick="calcRoute();">
+            <paper-button raised fill id="submit" onclick="calcRoute(); enterCache();">
               <core-icon icon="polymer"></core-icon> &nbsp; Submit
             </paper-button>
+          </core-item>
+          <core-item>
+            <ul id="searchList">
+              <!-- TODO - All previous searches come here -->
+            </ul>
           </core-item>
         </core-menu>
       </core-header-panel>
@@ -52,6 +57,9 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <!--script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script-->
     <!--script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script-->
+    <!-- JQuery CDN -->
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <!-- Custom Js File -->
     <script type="text/javascript" src="js/main.js"></script>
   </body>

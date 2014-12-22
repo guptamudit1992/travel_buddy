@@ -60,6 +60,15 @@ function calcRoute() {
 	var start = document.getElementById('start').value;
 	var end = document.getElementById('end').value;
 
+	createGraph(start,end);
+
+	//Setting the cookies
+	setCookie("source", start);
+	setCookie("destination",end);
+}
+
+function createGraph(start,end){
+	console.log(start,end);
 	  var request = {
 	      origin:start,
 	      destination:end,
@@ -70,11 +79,16 @@ function calcRoute() {
 	      directionsDisplay.setDirections(response);
 	    }
 	  });
-
-	//Setting the cookies
-	setCookie("source", start);
-	setCookie("destination",end);
 }
+
+//Jquery Function to detect mouse hover on list and load Map for it
+$(document).on('hover','#searchList li',function(){
+	var start = $(this).find('#source_start').html();
+	var end = $(this).find('#destination_end').html();
+
+	createGraph(start,end);
+}); 
+
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -105,3 +119,18 @@ function getLocale() {
 	var searchBox = new google.maps.places.SearchBox(
 	  /** @type {HTMLInputElement} */(input_start));
 }
+
+
+//Caching implementation - Most Frequently USed 
+function enterCache() {
+	var input_source = document.getElementById('start').value;
+	var input_destination = document.getElementById('end').value;
+
+	if(input_source!=null && input_destination!=null) {
+		var entry_object = "<li><b>Source</b>: <span id='source_start'>"+input_source +"</span>...<br><b>Destination</b>: <span id='destination_end'>"+input_destination+"</span>...</li>";
+		$('#searchList').prepend(entry_object);
+	}
+}
+
+
+

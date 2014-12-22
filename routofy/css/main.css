@@ -36,10 +36,26 @@ core-toolbar {
 #submit {
   background: #526E9C;
   color: white;
-  margin: 2em 3.29em 0 0 !important;
+  margin: 0.7em 3.29em 0 0 !important;
 }
 
 #map-canvas {
   padding: 20em;
   border: 1px solid #999;
+}
+
+#searchList {
+  overflow: hidden;
+  margin-top:30px;
+}
+
+#searchList li {
+  padding: 5px;
+  font-size:14px;
+  margin-left:-25px !important;
+  margin-top:10px;
+}
+
+#searchList li:hover {
+  background: #ecf0f1;
 }
