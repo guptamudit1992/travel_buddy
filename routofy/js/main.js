@@ -4,6 +4,7 @@ var map;
 
 //cache object
 var mapCache = {};
+var cacheLimit = 5;
 
 // Function to Load current location of user on Google Map 
 function initialize() {
@@ -72,6 +73,7 @@ function calcRoute() {
 
 function createGraph(start,end){		    	
 	var map_key = start+"-"+end;
+	setCache();
 	//Checking for source and destination in Cache
 	if(!mapCache[map_key]){
 		//console.log("Call API");
