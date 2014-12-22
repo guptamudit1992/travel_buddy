@@ -49,13 +49,15 @@ core-toolbar {
   margin-top:30px;
 }
 
-#searchList li {
-  padding: 5px;
+#searchList div {
+  padding: 10px;
+  margin-top: 4px; 
   font-size:14px;
-  margin-left:-25px !important;
-  margin-top:10px;
+  margin-left:-45px !important;
+  background: #ecf0f1;
+  cursor: pointer;
 }
 
-#searchList li:hover {
-  background: #ecf0f1;
+#searchList div:hover {
+  background: #BCC1C2;
 }

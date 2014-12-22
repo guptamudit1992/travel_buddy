@@ -2,6 +2,9 @@ var directionsDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
 
+//cache object
+var mapCache = {};
+
 // Function to Load current location of user on Google Map 
 function initialize() {
   //TODO : Check for cookie stored in browser to get details of last search done by the user
@@ -68,21 +71,30 @@ function calcRoute() {
 }
 
 function createGraph(start,end){
-	console.log(start,end);
-	  var request = {
-	      origin:start,
-	      destination:end,
-	      travelMode: google.maps.TravelMode.DRIVING
-	  };
-	  directionsService.route(request, function(response, status) {
-	    if (status == google.maps.DirectionsStatus.OK) {
-	      directionsDisplay.setDirections(response);
-	    }
-	  });
+	//Checking for source and destination in Cache
+	if(!mapCache[start+"-"+end]){
+		console.log("Call API");
+
+		  var request = {
+		      origin:start,
+		      destination:end,
+		      travelMode: google.maps.TravelMode.DRIVING
+		  };
+		  directionsService.route(request, function(response, status) {
+		    if (status == google.maps.DirectionsStatus.OK) {
+		    	var map_key = start+"-"+end;
+		    	mapCache[map_key] = response;
+		        directionsDisplay.setDirections(response);
+		    }
+		  });
+	} else {
+		console.log("Create Map from hash");
+		directionsDisplay.setDirections(mapCache[start+"-"+end]);
+	}
 }
 
 //Jquery Function to detect mouse hover on list and load Map for it
-$(document).on('hover','#searchList li',function(){
+$(document).on('hover','#searchList div',function(){
 	var start = $(this).find('#source_start').html();
 	var end = $(this).find('#destination_end').html();
 
@@ -121,13 +133,13 @@ function getLocale() {
 }
 
 
-//Caching implementation - Most Frequently USed 
-function enterCache() {
+//Populating list of last searches
+function enterList() {
 	var input_source = document.getElementById('start').value;
 	var input_destination = document.getElementById('end').value;
-
+	//Populate the List of last searches
 	if(input_source!=null && input_destination!=null) {
-		var entry_object = "<li><b>Source</b>: <span id='source_start'>"+input_source +"</span>...<br><b>Destination</b>: <span id='destination_end'>"+input_destination+"</span>...</li>";
+		var entry_object = "<div><b>Source</b>: <span id='source_start'>"+input_source +"</span>...<br><b>Destination</b>: <span id='destination_end'>"+input_destination+"</span>...</div>";
 		$('#searchList').prepend(entry_object);
 	}
 }
