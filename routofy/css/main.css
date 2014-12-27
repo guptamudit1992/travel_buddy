@@ -66,10 +66,15 @@ core-toolbar {
 
 #directions-panel {
   overflow: auto;
-  margin-top: 25px;
+  margin-top: 20px;
   font-size: 12px;
 }
 
 paper-input-decorator {
   width: 100% !important;
+}
+
+img.adp-marker {
+  width: 21px !important;
+  height: 32px !important;
 }

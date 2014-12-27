@@ -8,10 +8,9 @@ var cacheLimit = 5;
 
 // Function to Load current location of user on Google Map 
 function initialize() {
-  //TODO : Check for cookie stored in browser to get details of last search done by the user
 
+  //TODO : Check for cookie stored in browser to get details of last search done by the user
   if(getCookie("source")!=null && getCookie("destination")!=null) {
-  	
   	document.getElementById('start').value = getCookie("source");
   	document.getElementById('end').value = getCookie("destination");
 
@@ -22,6 +21,10 @@ function initialize() {
 	    zoom:7
 	};      
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+	var trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map);
+
 	directionsDisplay.setMap(map);
 	directionsDisplay.setPanel(document.getElementById('directions-panel'));
   	calcRoute();
@@ -55,6 +58,10 @@ function initialize() {
 	        center:loc
 	      };      
 	      map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+	      var trafficLayer = new google.maps.TrafficLayer();
+  		  trafficLayer.setMap(map);
+
 	      directionsDisplay.setMap(map);
 	      directionsDisplay.setPanel(document.getElementById('directions-panel'));
 	  }
@@ -73,6 +80,7 @@ function calcRoute() {
 	setCookie("destination",end);
 }
 
+// Create Graph
 function createGraph(start,end){		    	
 	var map_key = start+"-"+end;
 	setCache();
@@ -122,17 +130,10 @@ function getCookie(key) {
 
 //Fetch autofill for source and destination
 function getLocale() {
-	// Create the search box and link it to the UI element.
-	var input_start = /** @type {HTMLInputElement} */(
-	    document.getElementById('start'));
-	var input_end = /** @type {HTMLInputElement} */(
-	    document.getElementById('end'));
-
-	var searchBox = new google.maps.places.SearchBox(
-	  /** @type {HTMLInputElement} */(input_end));
-
-	var searchBox = new google.maps.places.SearchBox(
-	  /** @type {HTMLInputElement} */(input_start));
+	var input_start = (document.getElementById('start'));
+	var input_end = (document.getElementById('end'));
+	var searchBox = new google.maps.places.SearchBox((input_end));
+	var searchBox = new google.maps.places.SearchBox((input_start));
 }
 
 
@@ -147,7 +148,6 @@ function enterList() {
 	}
 	//setCache();
 }
-
 
 
 //Function to calculate MFU (Most Frequently Used) source and destination and store in Cache (Default size of case - 5)
