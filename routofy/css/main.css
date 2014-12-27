@@ -34,6 +34,8 @@ core-toolbar {
 }
 
 #submit {
+  font-size: 14px;
+  padding-right: 15px;
   background: #526E9C;
   color: white;
   margin: 0.7em 3.29em 0 0 !important;
@@ -60,4 +62,14 @@ core-toolbar {
 
 #searchList div:hover {
   background: #BCC1C2;
+}
+
+#directions-panel {
+  overflow: auto;
+  margin-top: 25px;
+  font-size: 12px;
+}
+
+paper-input-decorator {
+  width: 100% !important;
 }
