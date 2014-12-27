@@ -17,16 +17,21 @@ function initialize() {
   	//If cookie in present in browser fetch and calculate map
   	var geocoder = geocoder = new google.maps.Geocoder();
   	directionsDisplay = new google.maps.DirectionsRenderer();
+
 	var mapOptions = {
 	    zoom:7
 	};      
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
+	directionsDisplay.setMap(map);
+
+	// To render traffic situation at given point of time 
 	var trafficLayer = new google.maps.TrafficLayer();
     trafficLayer.setMap(map);
 
-	directionsDisplay.setMap(map);
+	// API to fetch route details
 	directionsDisplay.setPanel(document.getElementById('directions-panel'));
+
   	calcRoute();
 
   } else {
@@ -43,6 +48,7 @@ function initialize() {
 
 	      // To Fetch Current Location of user
 	      var latlng = new google.maps.LatLng(latitude, longitude);
+
 	      var geocoder = geocoder = new google.maps.Geocoder();
 	      geocoder.geocode({ 'latLng': latlng }, function (results, status) {
 	          if (status == google.maps.GeocoderStatus.OK) {
@@ -58,11 +64,13 @@ function initialize() {
 	        center:loc
 	      };      
 	      map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+		  directionsDisplay.setMap(map);
 
+		 // To render traffic situation at given point of time 
 	      var trafficLayer = new google.maps.TrafficLayer();
   		  trafficLayer.setMap(map);
-
-	      directionsDisplay.setMap(map);
+	      
+	      // API to fetch route details
 	      directionsDisplay.setPanel(document.getElementById('directions-panel'));
 	  }
   }
@@ -179,3 +187,4 @@ function getSortedKeys(obj) {
     	return obj[b]-obj[a]
    	});
 }
+
